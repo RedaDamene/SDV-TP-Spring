@@ -35,6 +35,7 @@ public class JpaApplication implements CommandLineRunner {
     @Override
     public void run(String... args) throws Exception {
 
+        System.out.println("TP04");
         System.out.println("1. Repository Species");
         Species speciesCommon = speciesDAO.findFirstByName("Lapin");
         Species speciesLatin = speciesDAO.findFirstByLatinNameIgnoreCase("Felis silvestris catus");
@@ -58,5 +59,37 @@ public class JpaApplication implements CommandLineRunner {
 
         System.out.println("Get by Animal Species" + animalListSpecies);
         System.out.println("Get by Animal List Color" + animalListColor);
+
+        //---------------------------------------------------------------------------------------------------------
+
+        System.out.println("TP05");
+
+        System.out.println("1. Repository Species");
+
+        List<Species> speciesListOrderByName = speciesDAO.findAllSpeciesOrderbyName();
+        List<Species>  speciesListLikeParamName = speciesDAO.findAllSpeciesLikeParam("Chat");
+
+        System.out.println("Species Order by Common Name ASC" + speciesListOrderByName);
+        System.out.println("Species Like Param Name" + speciesListLikeParamName);
+
+        System.out.println("2. Repository Person");
+
+        List<Person> personWithAgebetweenParams = personDAO.findAllByAgeBetweenParam(15,60);
+        List<Person> personOwnAnimalParam = personDAO.findPersonByAnimalOwned("Lou");
+
+        System.out.println("Person with an age betwenn 2 params" + personWithAgebetweenParams);
+        System.out.println("Person own the animal param" + personOwnAnimalParam);
+
+        System.out.println("3. Repository Animal");
+
+        int getNbrAnimalByGenre = animalDAO.findAnimal("M");
+        Boolean getIfOwnedByOnePerson = animalDAO.findOwnedAnimalByPerson("Bill");
+
+        System.out.println("Number animal by genre" + getNbrAnimalByGenre);
+        System.out.println("Owned by an person" + getIfOwnedByOnePerson);
+
+        //---------------------------------------------------------------------------------------------------------
+        System.out.println("TP06");
+
     }
 }
