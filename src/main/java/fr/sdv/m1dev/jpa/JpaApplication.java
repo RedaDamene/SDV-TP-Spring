@@ -13,6 +13,7 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 @SpringBootApplication
 public class JpaApplication implements CommandLineRunner {
@@ -34,7 +35,7 @@ public class JpaApplication implements CommandLineRunner {
 
     @Override
     public void run(String... args) throws Exception {
-
+    /*
         System.out.println("TP04");
         System.out.println("1. Repository Species");
         Species speciesCommon = speciesDAO.findFirstByName("Lapin");
@@ -44,7 +45,7 @@ public class JpaApplication implements CommandLineRunner {
         System.out.println("Latin Name Ignore Case Sensitive : " + speciesLatin);
 
         System.out.println("2. Repository Person");
-        List<Person> personListByLastNameOrFirstName = personDAO.findByLastNameOrFirstName("Lamarque", "Henri");
+        Optional<Person> personListByLastNameOrFirstName = personDAO.findByLastNameOrFirstName("Lamarque", "Henri");
         List<Person> personListByAge = personDAO.findAllByAgeGreaterThan(45);
 
         System.out.println("Get by Lastname firt or Forstname second" + personListByLastNameOrFirstName);
@@ -90,6 +91,6 @@ public class JpaApplication implements CommandLineRunner {
 
         //---------------------------------------------------------------------------------------------------------
         System.out.println("TP06");
-
+    */
     }
 }

@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.Optional;
 
 @RestController
 @RequestMapping("/rest/persons")
@@ -29,8 +30,8 @@ public class PersonController {
     }
 
     @PutMapping("/{id}")
-    public Person updatePerson(@PathVariable Integer id, @RequestBody Person updatedPerson) {
-        return personService.updatePerson(id, updatedPerson);
+    public Person updatePerson(@PathVariable Integer id,@RequestParam String newFirstName, @RequestParam String newLastName) {
+        return personService.updatePersonLastNameByFirstName(id, newFirstName, newLastName);
     }
 
     @DeleteMapping("/{id}")
@@ -38,9 +39,9 @@ public class PersonController {
         personService.deletePerson(id);
     }
 
-    @GetMapping("/{id}")
-    public Person findById(@PathVariable Integer id) {
-        return personService.findById(id);
+    @GetMapping("/{name}")
+    public Person findById(@PathVariable String name) {
+        return personService.findByFirstNameOrLastName(name);
     }
 
     @GetMapping

@@ -9,9 +9,9 @@ import java.util.List;
 @Service
 public interface PersonService {
     Person createPerson(Person person);
-    Person updatePerson(Integer id, Person updatedPerson);
+    Person updatePersonLastNameByFirstName(Integer id, String newFirstName, String newLastName);
     void deletePerson(Integer id);
-    Person findById(Integer id);
+    Person findByFirstNameOrLastName(String name);
     List<Person> findAll();
     void generatePersons(int count);
 }

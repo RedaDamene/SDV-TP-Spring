@@ -2,12 +2,13 @@ package fr.sdv.m1dev.jpa.bll;
 
 import fr.sdv.m1dev.jpa.bo.Person;
 import fr.sdv.m1dev.jpa.dal.PersonDAO;
-import fr.sdv.m1dev.jpa.dal.PersonDAOCustom;
+import jakarta.persistence.EntityNotFoundException;
 import jakarta.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Optional;
 
 @Service
 public class PersonServiceImpl implements PersonService {
@@ -28,14 +29,18 @@ public class PersonServiceImpl implements PersonService {
         return personDAO.save(person);
     }
 
-    @Override
     @Transactional
-    public Person updatePerson(Integer id, Person updatedPerson) {
-        return personDAO.findById(id).map(existingPerson -> {
-            existingPerson.setFirstName(updatedPerson.getFirstName());
-            // Ajouter ici la mise à jour d'autres champs
-            return personDAO.save(existingPerson);
-        }).orElseThrow(() -> new IllegalArgumentException("Person not found with id: " + id));
+    public Person updatePersonLastNameByFirstName(Integer id, String newFirstName, String newLastName) {
+        Optional<Person> personToUpdate = personDAO.findById(id);
+
+        if (personToUpdate.isPresent()) {
+            Person personToUpdated = personToUpdate.get();
+            personToUpdated.setLastName(newLastName);
+            personToUpdated.setFirstName(newFirstName);
+            return personDAO.save(personToUpdated); // Sauvegarde et retourne l'entité mise à jour
+        } else {
+            throw new EntityNotFoundException("Person with id " + id + " not found"); // Gérer le cas où l'entité n'existe pas
+        }
     }
 
     @Override
@@ -44,10 +49,9 @@ public class PersonServiceImpl implements PersonService {
         personDAO.deleteById(id);
     }
 
-    @Override
-    public Person findById(Integer id) {
-        return personDAO.findById(id)
-                .orElseThrow(() -> new IllegalArgumentException("Person not found with id: " + id));
+    public Person findByFirstNameOrLastName(String name) {
+        return personDAO.findByLastNameOrFirstName(name, name)
+                .orElseThrow(() -> new IllegalArgumentException("Person not found with firstName : " + name));
     }
 
     @Override

@@ -7,10 +7,11 @@ import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
+import java.util.Optional;
 
 @Repository
 public interface PersonDAO extends JpaRepository<Person, Integer>, PersonDAOCustom {
-    List<Person> findByLastNameOrFirstName(String lastName, String firstName);
+    Optional<Person> findByLastNameOrFirstName(String lastName, String firstName);
 
     List<Person> findAllByAgeGreaterThan(int age);
 

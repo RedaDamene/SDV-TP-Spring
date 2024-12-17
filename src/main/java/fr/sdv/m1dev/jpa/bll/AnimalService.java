@@ -9,9 +9,9 @@ import java.util.List;
 public interface AnimalService {
 
     Animal createAnimal(Animal animal);
-    Animal updateAnimal(Integer id, Animal updatedAnimal);
+    Animal updateAnimal(Animal updatedAnimal);
     void deleteAnimal(Integer id);
-    Animal findById(Integer id);
+    Animal findById(String name);
     List<Animal> findAll();
 
 }

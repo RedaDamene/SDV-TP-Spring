@@ -18,38 +18,28 @@ public class AnimalServiceImpl implements AnimalService{
         this.animalDAO = animalDAO;
     }
 
+
     @Override
-    @Transactional
     public Animal createAnimal(Animal animal) {
         return animalDAO.save(animal);
     }
 
     @Override
-    @Transactional
-    public Animal updateAnimal(Integer id, Animal updatedAnimal) {
-        return animalDAO.findById(id).map(existingAnimal -> {
-            existingAnimal.setName(updatedAnimal.getName());
-            existingAnimal.setPersons(updatedAnimal.getPersons());
-            // Ajouter ici la mise à jour d'autres champs
-            return animalDAO.save(existingAnimal);
-        }).orElseThrow(() -> new IllegalArgumentException("Animal not found with id: " + id));
+    public Animal updateAnimal(Animal updatedAnimal) {
+        return animalDAO.save(updatedAnimal);
     }
 
     @Override
-    @Transactional
     public void deleteAnimal(Integer id) {
         animalDAO.deleteById(id);
     }
 
     @Override
-    @Transactional
-    public Animal findById(Integer id) {
-        return animalDAO.findById(id)
-                .orElseThrow(() -> new IllegalArgumentException("Animal not found with id: " + id));
+    public Animal findById(String name) {
+        return animalDAO.findByName(name);
     }
 
     @Override
-    @Transactional
     public List<Animal> findAll() {
         return animalDAO.findAll();
     }

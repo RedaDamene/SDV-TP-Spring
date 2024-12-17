@@ -21,4 +21,6 @@ public interface AnimalDAO extends JpaRepository<Animal, Integer> {
 
     @Query("SELECT CASE WHEN (COUNT(p) > 0) THEN true ELSE false END FROM Person p JOIN p.animals a WHERE a.name = :name")
     Boolean findOwnedAnimalByPerson(@Param("name") String name);
+
+    Animal findByName(String name);
 }
