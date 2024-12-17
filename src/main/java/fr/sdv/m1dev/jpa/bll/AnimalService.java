@@ -11,7 +11,7 @@ public interface AnimalService {
     Animal createAnimal(Animal animal);
     Animal updateAnimal(Animal updatedAnimal);
     void deleteAnimal(Integer id);
-    Animal findById(String name);
+    Animal findByName(String name);
     List<Animal> findAll();
 
 }

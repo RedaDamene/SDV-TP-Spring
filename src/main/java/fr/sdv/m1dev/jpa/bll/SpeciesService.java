@@ -8,5 +8,10 @@ import org.springframework.beans.factory.annotation.Autowired;
 import java.util.List;
 
 public interface SpeciesService  {
-    
+
+    Species createSpecies(Species species);
+    Species updateSpecies(Species updatedSpecies);
+    void deleteSpecies(Integer id);
+    Species findByName(String name);
+    List<Species> findAll();
 }

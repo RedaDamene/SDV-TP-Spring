@@ -35,7 +35,7 @@ public class AnimalServiceImpl implements AnimalService{
     }
 
     @Override
-    public Animal findById(String name) {
+    public Animal findByName(String name) {
         return animalDAO.findByName(name);
     }
 

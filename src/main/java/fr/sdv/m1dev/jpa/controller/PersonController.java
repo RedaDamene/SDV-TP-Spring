@@ -40,7 +40,7 @@ public class PersonController {
     }
 
     @GetMapping("/{name}")
-    public Person findById(@PathVariable String name) {
+    public Person findByName(@PathVariable String name) {
         return personService.findByFirstNameOrLastName(name);
     }
 
