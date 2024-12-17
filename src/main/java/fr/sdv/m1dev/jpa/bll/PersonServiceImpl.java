@@ -49,9 +49,9 @@ public class PersonServiceImpl implements PersonService {
         personDAO.deleteById(id);
     }
 
-    public Person findByFirstNameOrLastName(String name) {
-        return personDAO.findByLastNameOrFirstName(name, name)
-                .orElseThrow(() -> new IllegalArgumentException("Person not found with firstName : " + name));
+    public Person findById(Integer id) {
+        return personDAO.findById(id)
+                .orElseThrow(() -> new IllegalArgumentException("Person not found with firstName : " + id));
     }
 
     @Override

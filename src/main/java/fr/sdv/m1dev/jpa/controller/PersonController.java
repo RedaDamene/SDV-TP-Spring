@@ -39,9 +39,9 @@ public class PersonController {
         personService.deletePerson(id);
     }
 
-    @GetMapping("/{name}")
-    public Person findByName(@PathVariable String name) {
-        return personService.findByFirstNameOrLastName(name);
+    @GetMapping("/{id}")
+    public Person findByName(@PathVariable Integer id) {
+        return personService.findById(id);
     }
 
     @GetMapping

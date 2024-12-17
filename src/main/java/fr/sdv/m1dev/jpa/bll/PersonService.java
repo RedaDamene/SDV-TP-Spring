@@ -11,7 +11,7 @@ public interface PersonService {
     Person createPerson(Person person);
     Person updatePersonLastNameByFirstName(Integer id, String newFirstName, String newLastName);
     void deletePerson(Integer id);
-    Person findByFirstNameOrLastName(String name);
+    Person findById(Integer id);
     List<Person> findAll();
     void generatePersons(int count);
 }
