@@ -3,6 +3,7 @@ package fr.sdv.m1dev.jpa.controller;
 import fr.sdv.m1dev.jpa.bll.PersonServiceImpl;
 import fr.sdv.m1dev.jpa.bo.Person;
 import fr.sdv.m1dev.jpa.exception.EntityToCreateHasAnIdException;
+import fr.sdv.m1dev.jpa.exception.EntityToUpdateHasNoIdException;
 import jakarta.persistence.EntityNotFoundException;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -44,11 +45,14 @@ public class PersonController {
             @PathVariable Integer id,
             @RequestBody @Valid Person personToUpdate
     ) {
+        if (personToUpdate.getId() == null) {
+            throw new EntityToUpdateHasNoIdException("ID manquante.");
+        }
 
         if (!id.equals(personToUpdate.getId())) {
             throw new EntityNotFoundException();
         }
-        return ResponseEntity.ok(personService.updatePerson(personToUpdate));
+        return ResponseEntity.ok(personService.updatePerson(id, personToUpdate));
     }
 
     @DeleteMapping("/{id}")

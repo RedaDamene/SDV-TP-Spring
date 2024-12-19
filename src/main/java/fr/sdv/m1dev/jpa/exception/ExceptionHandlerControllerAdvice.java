@@ -1,13 +1,12 @@
 package fr.sdv.m1dev.jpa.exception;
 
-import fr.sdv.m1dev.jpa.exception.EntityToCreateHasAnIdException;
+import jakarta.persistence.EntityNotFoundException;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
 import org.springframework.web.context.request.WebRequest;
-import fr.sdv.m1dev.jpa.exception.ErrorDto;
 
 import java.time.LocalDateTime;
 import java.util.List;
@@ -16,15 +15,14 @@ import java.util.stream.Collectors;
 @RestControllerAdvice
 public class ExceptionHandlerControllerAdvice {
 
-    @ExceptionHandler({jakarta.persistence.EntityNotFoundException.class})
-    @ResponseStatus(code = HttpStatus.BAD_REQUEST)
+    @ExceptionHandler({EntityNotFoundException.class})
+    @ResponseStatus(code = HttpStatus.NOT_FOUND)
     public ErrorDto handleExceptionNotFound(Exception exception, WebRequest request) {
         exception.printStackTrace();
         return new ErrorDto(
-                HttpStatus.NOT_FOUND.value(),
                 LocalDateTime.now(),
                 exception.getMessage(),
-                request.getDescription(false)
+                request.getContextPath()
         );
     }
 
@@ -33,10 +31,9 @@ public class ExceptionHandlerControllerAdvice {
     public ErrorDto handleEntityToCreateHasAnIdException(Exception exception, WebRequest request) {
         exception.printStackTrace();
         return new ErrorDto(
-                HttpStatus.BAD_REQUEST.value(),
                 LocalDateTime.now(),
                 exception.getMessage(),
-                request.getDescription(false)
+                request.getContextPath()
         );
     }
 
@@ -45,10 +42,9 @@ public class ExceptionHandlerControllerAdvice {
     public ErrorDto handleEntityToUpdateHasNoIdException(Exception exception, WebRequest request) {
         exception.printStackTrace();
         return new ErrorDto(
-                HttpStatus.BAD_REQUEST.value(),
                 LocalDateTime.now(),
                 exception.getMessage(),
-                request.getDescription(false)
+                request.getContextPath()
         );
     }
 

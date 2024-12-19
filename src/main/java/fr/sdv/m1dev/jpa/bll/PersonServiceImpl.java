@@ -2,6 +2,8 @@ package fr.sdv.m1dev.jpa.bll;
 
 import fr.sdv.m1dev.jpa.bo.Person;
 import fr.sdv.m1dev.jpa.dal.PersonDAO;
+import fr.sdv.m1dev.jpa.dto.PersonDto;
+import fr.sdv.m1dev.jpa.dto.PersonMapper;
 import fr.sdv.m1dev.jpa.exception.EntityToCreateHasAnIdException;
 import fr.sdv.m1dev.jpa.exception.EntityToUpdateHasNoIdException;
 import jakarta.persistence.EntityNotFoundException;
@@ -37,12 +39,9 @@ public class PersonServiceImpl implements PersonService {
     }
 
     @Transactional
-    public Person updatePerson(Person personToUpdate) {
+    public Person updatePerson(Integer id, Person personToUpdate) {
         Optional<Person> existingPersonOpt = personDAO.findById(personToUpdate.getId());
 
-        if (personToUpdate.getId() == null) {
-            throw new EntityToUpdateHasNoIdException("The entity to update must have an ID.");
-        }
 
         if (existingPersonOpt.isPresent()) {
             Person existingPerson = existingPersonOpt.get();
@@ -65,9 +64,11 @@ public class PersonServiceImpl implements PersonService {
         personDAO.deleteById(id);
     }
 
-    public Person findById(Integer id) {
-        return personDAO.findById(id)
-                .orElseThrow(() -> new IllegalArgumentException("Person not found with firstName : " + id));
+    public PersonDto findById(Integer id) {
+        Person person = personDAO.findById(id)
+                .orElseThrow(() -> new EntityNotFoundException("Personne non trouvé : " + id));
+
+        return PersonMapper.toDto(person);
     }
 
     @Override
