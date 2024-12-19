@@ -1,5 +1,6 @@
 package fr.sdv.m1dev.jpa.bo;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 
 import java.io.Serializable;
@@ -12,7 +13,7 @@ public class Person implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id")
-    private int Integer;
+    private int id;
     @Column(name = "age")
     private int age;
     @Column(name = "firstname", length = 50, nullable = false)
@@ -20,6 +21,7 @@ public class Person implements Serializable {
     @Column(name = "lastname", length = 50, nullable = false)
     private String lastName;
 
+    @JsonIgnore
     @ManyToMany(mappedBy = "persons")
     Set<Animal> animals;
 
@@ -34,6 +36,9 @@ public class Person implements Serializable {
         this.animals = animals;
     }
 
+    public java.lang.Integer getId() {
+        return id;
+    }
     public int getAge() {
         return age;
     }
@@ -74,4 +79,6 @@ public class Person implements Serializable {
                 ", lastName='" + lastName + '\'' +
                 '}';
     }
+
+
 }

@@ -1,5 +1,6 @@
 package fr.sdv.m1dev.jpa.bo;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 
 import java.io.Serializable;
@@ -19,6 +20,8 @@ public class Animal implements Serializable {
     private String name;
     @Column(name = "sex", nullable = false)
     private String sex;
+
+    @JsonIgnore
     @ManyToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
     @JoinTable(
             name = "person_animals",
@@ -26,6 +29,7 @@ public class Animal implements Serializable {
             inverseJoinColumns = @JoinColumn(name = "person_id"))
     Set<Person> persons;
 
+    @JsonIgnore
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "species_id")
     Species species;
@@ -38,6 +42,14 @@ public class Animal implements Serializable {
         this.name = name;
         this.sex = sex;
         this.persons = persons;
+    }
+
+    public int getId() {
+        return id;
+    }
+
+    public void setId(int id) {
+        this.id = id;
     }
 
     public String getColor() {
